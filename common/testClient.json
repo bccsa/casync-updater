@@ -1,0 +1,10 @@
+[
+    {
+        "interval": 10000,
+        "index": "/home/pi/casync-updater-test/index.caidx",
+        "store": "/home/pi/casync-updater-test/store.castr",
+        "destination": "/home/pi/CDN_RPI_Client_test",
+        "backupIndex": "/home/pi/casync-updater-backup/index.caidx",
+        "backupStore": "/home/pi/casync-updater-backup/store.castr"
+    }
+]

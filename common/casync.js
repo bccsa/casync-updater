@@ -47,8 +47,7 @@ class casync {
             exec(`casync digest ${this._optionString} ${target}`).then(data => {
                 resolve(data.stdout.trim());
             }).catch(err => {
-                console.log(`Unable to digest ${target}: ${err.message}`);
-                resolve('');
+                reject(err);
             });
         });
     }

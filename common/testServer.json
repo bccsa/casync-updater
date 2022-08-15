@@ -1,4 +1,5 @@
 {
     "index": "/home/pi/casync-updater-test/index.caidx",
+    "store": "/home/pi/casync-updater-test/store.castr",
     "source": "/home/pi/CDN_RPI_Client/"
 }

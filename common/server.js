@@ -4,7 +4,6 @@
 
 const { casync } = require('./casync.js');
 const { loadJSON, saveJSON } = require('./json.js');
-const path = require('path');
 
 /**
  * Run casync make according to configuration stored in the file as per passed configPath
@@ -14,11 +13,11 @@ function run(configPath) {
     // Load configuration data passed via the first argument
     loadJSON(configPath).then(async (config) => {
         // validate configuration file data
-        if (config && config.index && config.source) {
+        if (config && config.index && config.store && config.source) {
             // Create a new casync wrapper instance
             let c = new casync([
-                {store: path.dirname(config.index) + '/data.castr'},      // Set the archive folder name to data (instead of default name of 'default)
-                {with: '2sec-time'},                                      // This option seems to ignore user details
+                {store: config.store},
+                {with: '2sec-time'},    // This option seems to ignore user details
             ]);
 
             // Calculate / get checksums
