@@ -1,5 +1,5 @@
 {
-    "index": "/home/casync-update/index.caidx",
-    "store": "/home/casync-update/store.castr",
+    "index": "/casync-update/index.caidx",
+    "store": "/casync-update/store.castr",
     "source": "config/"
 }

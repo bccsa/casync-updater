@@ -35,16 +35,16 @@ jobs:
       - name: install nodejs
         run: sudo apt-get install nodejs
       - name: create output directory
-        run: mkdir /home/casync-update
+        run: sudo mkdir /casync-update
       - name: casync make
-        run: node config/server.js deploy/server.json
+        run: sudo node config/server.js deploy/server.json
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Only upload the casync make output
-          path: 'casync-update'
+          path: '/casync-update'
 #      - name: Deploy to GitHub Pages
 #        id: deployment
 #        uses: actions/deploy-pages@v1
