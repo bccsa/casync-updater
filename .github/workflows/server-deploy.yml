@@ -35,7 +35,7 @@ jobs:
       - name: install nodejs
         run: sudo apt-get install nodejs
       - name: create output directory
-        run: mkdir casync-update
+        run: mkdir /home/casync-update
       - name: casync make
         run: node config/server.js deploy/server.json
       - name: Setup Pages
