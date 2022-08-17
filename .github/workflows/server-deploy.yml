@@ -45,6 +45,6 @@ jobs:
         with:
           # Only upload the casync make output
           path: '/casync-update'
-#      - name: Deploy to GitHub Pages
-#        id: deployment
-#        uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
