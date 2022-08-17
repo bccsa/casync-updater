@@ -37,7 +37,7 @@ jobs:
       - name: create output directory
         run: sudo mkdir /casync-update
       - name: casync make
-        run: sudo node config/server.js deploy/server.json
+        run: sudo node config/server.js .github/workflows/server.json
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
