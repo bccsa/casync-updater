@@ -30,7 +30,7 @@ function run(configPath) {
             }).catch(err => {
                 console.error(`Unable to digest destination: ${err.message}`);
             });
-            
+
             await casync.digest(config.source, srcOptions).then(checksum => {
                 srcChecksum = checksum;
             }).catch(err => {
@@ -40,7 +40,7 @@ function run(configPath) {
             // Compare checksums to detect changes in the source
             if (srcChecksum !== dstChecksum) {
                 // Create or update the archive
-                casync.make(config.index, config.source, options).then(data => {
+                casync.make(config.index, config.source, dstOptions).then(data => {
                     if (data.stderr && data.stderr != '') {
                         console.log(stderr.toString());
                     }
