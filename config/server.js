@@ -15,18 +15,26 @@ function run(configPath) {
         // validate configuration file data
         if (config && config.index && config.store && config.source) {
             // casync options
-            let options = [
-                {store: config.store},
+            let srcOptions = [
                 {with: '2sec-time'},    // This option seems to ignore user details
+            ];
+            let dstOptions = [
+                {store: config.store},
+                {with: '2sec-time'},
             ];
 
             // Calculate / get checksums
             let dstChecksum, srcChecksum;
-            await casync.digest(config.index, options).then(checksum => {
+            await casync.digest(config.index, dstOptions).then(checksum => {
                 dstChecksum = checksum;
+            }).catch(err => {
+                console.error(`Unable to digest destination: ${err.message}`);
             });
-            await casync.digest(config.source, options).then(checksum => {
+            
+            await casync.digest(config.source, srcOptions).then(checksum => {
                 srcChecksum = checksum;
+            }).catch(err => {
+                console.error(`Unable to digest source: ${err.message}`);
             });
 
             // Compare checksums to detect changes in the source
@@ -40,7 +48,7 @@ function run(configPath) {
                         console.log(`Created archive - checksum: ${data.stdout.trim()}`);
                     }
                 }).catch(err => {
-                    console.error(err);
+                    console.error(`Unable to create archive: ${err}`);
                 });
             }
             else {
