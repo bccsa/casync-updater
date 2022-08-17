@@ -14,25 +14,25 @@ function run(configPath) {
     loadJSON(configPath).then(async (config) => {
         // validate configuration file data
         if (config && config.index && config.store && config.source) {
-            // Create a new casync wrapper instance
-            let c = new casync([
+            // casync options
+            let options = [
                 {store: config.store},
                 {with: '2sec-time'},    // This option seems to ignore user details
-            ]);
+            ];
 
             // Calculate / get checksums
             let dstChecksum, srcChecksum;
-            await c.digest(config.index).then(checksum => {
+            await casync.digest(config.index, options).then(checksum => {
                 dstChecksum = checksum;
             });
-            await c.digest(config.source).then(checksum => {
+            await casync.digest(config.source, options).then(checksum => {
                 srcChecksum = checksum;
             });
 
             // Compare checksums to detect changes in the source
             if (srcChecksum !== dstChecksum) {
                 // Create or update the archive
-                c.make(config.index, config.source).then(data => {
+                casync.make(config.index, config.source, options).then(data => {
                     if (data.stderr && data.stderr != '') {
                         console.log(stderr.toString());
                     }
