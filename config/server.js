@@ -4,6 +4,12 @@
 
 const { casync } = require('./casync.js');
 const { loadJSON, saveJSON } = require('./json.js');
+const fs = require('fs');
+
+// Get config file path from passed argument
+if (process.argv.length > 2) {
+    run(process.argv[2]);
+}
 
 /**
  * Run casync make according to configuration stored in the file as per passed configPath
@@ -25,16 +31,22 @@ function run(configPath) {
 
             // Calculate / get checksums
             let dstChecksum, srcChecksum;
-            await casync.digest(config.index, dstOptions).then(checksum => {
-                dstChecksum = checksum;
-            }).catch(err => {
-                console.error(`Unable to digest destination: ${err.message}`);
-            });
+            if (fs.existsSync(config.index)) {
+                await casync.digest(config.index, dstOptions).then(checksum => {
+                    dstChecksum = checksum;
+                }).catch(err => {
+                    console.error(`Unable to digest destination: ${err.message}`);
+                });
+            }
+            else {
+                console.log(`Destination directory is empty`);
+            }
 
             await casync.digest(config.source, srcOptions).then(checksum => {
                 srcChecksum = checksum;
             }).catch(err => {
                 console.error(`Unable to digest source: ${err.message}`);
+                process.exit(1);
             });
 
             // Compare checksums to detect changes in the source
@@ -49,6 +61,7 @@ function run(configPath) {
                     }
                 }).catch(err => {
                     console.error(`Unable to create archive: ${err}`);
+                    process.exit(1);
                 });
             }
             else {
@@ -57,10 +70,6 @@ function run(configPath) {
         }
     }).catch(err => {
         console.error(err);
+        process.exit(1);
     });
-}
-
-// Load config and make casync archive
-if (process.argv.length > 2) {
-    run(process.argv[2]);
 }
