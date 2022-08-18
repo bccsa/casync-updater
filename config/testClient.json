@@ -1,18 +1,18 @@
 [
     {
         "interval": 20000,
-        "srcIndex": "/home/pi/casync-updater-test/index.caidx",
-        "srcStore": "/home/pi/casync-updater-test/store.castr",
-        "dstPath": "/home/pi/CDN_RPI_Client_test",
+        "srcIndex": "https://bccsa.github.io/casync-updater/index.caidx",
+        "srcStore": "https://bccsa.github.io/casync-updater/store.castr",
+        "dstPath": "/home/pi/casync-updater-test",
         "backupIndex": "/home/pi/casync-updater-backup/index.caidx",
         "backupStore": "/home/pi/casync-updater-backup/store.castr",
         "triggers": [
             {
                 "paths": [
-                    "test.test"
+                    "."
                 ],
                 "actions": [
-                    "touch itWorked"
+                    "touch /home/pi/itWorked"
                 ]
             }
         ]
