@@ -6,19 +6,25 @@ A simple self updating software update system with offline updating capabilities
 
 ![Overview](doc/img/overview.png)
 
-## Prerequisites
-* diffutils
+## Dependencies
 * casync
+* diffutils
 
-Installing on Debian / Ubuntu / Raspberry Pi OS:
+## Installation
 ```shell
-sudo apt install diffutils casync
+wget -q https://github.com/bccsa/casync-updater/raw/main/deploy/install.sh -O - | sudo bash
 ```
+
+The casync-updater client is installed as a systemd service.
+Please run ```systemctl status casync-updater.service``` to ensure the service is running correctly.
+Client configuration file location: /etc/casync-updater/client.json
+Node JS scripts location: /opt/casync-updater
+Restart the casync-updater service after modifying the client.json configuration file for the changes to take effect.
 
 ## Server
 The server.js Node.js script should executed passing the configuration file as an argument:
 ```console
-node /usr/bin/casync-updater/server.js /home/updater/updater.json
+node /opt/casync-updater/server.js your/directory/server.json
 ```
 This can be included as part of your CI/CD pipeline.
 
@@ -27,7 +33,7 @@ Configuration file example:
 {
     "index": "/var/www/html/index.caidx",
     "store": "/var/www/html/store.castr",
-    "source": "/home/updater/source"
+    "source": "/your/directory/source"
 }
 ```
 where:
@@ -35,19 +41,15 @@ where:
 * "store" is the path to the casync store directory (typically stored in a web root directory).
 * "source" is the path to the directory or device where the repository to be distributed is stored.
 
-casync will create a ```data.castr``` storage directory in the same directory where the index (.caidx / .caibx) file is stored.
-
 ## Client
-
-
 Configuration file example:
 ```json
 [
     {
         "interval": 3600000,
-        "srcIndex": "https://github.com/bccsa/casync-updater/updates/index.caidx",
-        "srcStore": "https://github.com/bccsa/casync-updater/updates/store.castr",
-        "dstPath": "/usr/bin/casync-updater"
+        "srcIndex": "https://project1.example/updates/fancyName.caidx",
+        "srcStore": "https://project1.example/updates/fancyName.castr",
+        "dstPath": "/usr/bin/project1"
     },
     {
         "interval": 1800000,
