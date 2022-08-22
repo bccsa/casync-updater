@@ -21,7 +21,7 @@ if (process.argv.length > 2) {
         if (fs.lstatSync(path).isDirectory()) {
             let files = fs.readdirSync(path);
             files.forEach(file => {
-                loadFile(file);
+                loadFile(path + '/' + file);
             });
         }
         else if (fs.lstatSync(path).isFile()) {
