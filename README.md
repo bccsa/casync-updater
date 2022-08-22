@@ -1,3 +1,5 @@
+# Project moved to https://github.com/bcc-code/casync-updater
+
 # casync-updater
 casync based OTA updater for software running on linux
 
